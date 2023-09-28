@@ -1,0 +1,63 @@
+{
+  "name": "playwright-summary-reporter",
+  "version": "1.0.0",
+  "description": "Reporter for the Playwright testing framework",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "devDependencies": {
+    "@playwright/test": "^1.38.1",
+    "@types/jest": "^29.5.5",
+    "@types/node": "^20.7.1",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
+    "eslint": "^8.50.0",
+    "eslint-config-prettier": "^9.0.0",
+    "husky": "^8.0.0",
+    "jest": "^29.7.0",
+    "lint-staged": "^14.0.1",
+    "npm-failsafe": "^1.0.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.0.3",
+    "rimraf": "^5.0.5",
+    "ts-jest": "^29.1.1",
+    "tsc": "^2.0.4",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "prepare": "run-p prepare:*",
+    "prepare:husky": "husky install",
+    "prepare:playwright": "playwright install",
+    "prebuild": "failsafe clean lint format test",
+    "build": "tsc",
+    "pretest": "failsafe clean",
+    "test": "failsafe test:playwright test:jest",
+    "test:playwright": "playwright test || exit 0",
+    "test:jest": "jest",
+    "lint": "eslint ./src/**/*.ts --fix",
+    "format": "prettier ./src/**/*.ts --write",
+    "clean": "rimraf dist && rimraf report && rimraf result",
+    "package": "node scripts/package.js",
+    "prepublish": "failsafe build package"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aYukiYoshida/playwright-summary-reporter.git"
+  },
+  "keywords": [
+    "playwright",
+    "reporter",
+    "playwright-reporter"
+  ],
+  "author": "Yuki Yoshida <yuki.yoshida@access-company.com> (https://ayukiyoshida.github.io/tips/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aYukiYoshida/playwright-summary-reporter/issues"
+  },
+  "homepage": "https://github.com/aYukiYoshida/playwright-summary-reporter#readme"
+}
