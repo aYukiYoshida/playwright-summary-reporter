@@ -20,7 +20,6 @@
     "prettier": "^3.0.3",
     "rimraf": "^5.0.5",
     "ts-jest": "^29.1.1",
-    "tsc": "^2.0.4",
     "typescript": "^5.2.2"
   },
   "scripts": {
@@ -37,7 +36,7 @@
     "format": "prettier ./src/**/*.ts --write",
     "clean": "rimraf dist && rimraf report && rimraf result",
     "package": "node scripts/package.js",
-    "prepublish": "failsafe build package"
+    "prepublishOnly": "failsafe build package"
   },
   "lint-staged": {
     "*.ts": [
