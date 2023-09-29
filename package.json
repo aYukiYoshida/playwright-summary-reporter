@@ -2,8 +2,8 @@
   "name": "playwright-summary-reporter",
   "version": "1.0.1",
   "description": "Reporter for the Playwright testing framework",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
   "devDependencies": {
     "@playwright/test": "^1.38.1",
     "@types/jest": "^29.5.5",
@@ -36,7 +36,8 @@
     "format": "prettier ./src/**/*.ts --write",
     "clean": "rimraf dist && rimraf report && rimraf result",
     "package": "node scripts/package.js",
-    "prepublishOnly": "npm run build && npm run package"
+    "prepublishOnly": "npm run build && npm run package",
+    "publish": "npm publish ./dist"
   },
   "lint-staged": {
     "*.ts": [
