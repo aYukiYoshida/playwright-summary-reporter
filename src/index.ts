@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import z from "zod";
 import {
   TestCase,
   TestResult,
@@ -7,15 +8,27 @@ import {
   FullResult,
 } from "@playwright/test/reporter";
 
-export interface Summary {
-  durationInMs: number;
-  passed: string[];
-  skipped: string[];
-  failed: string[];
-  warned: string[];
-  timedOut: string[];
-  status: FullResult["status"] | "unknown" | "warned" | "skipped";
-}
+const summarySchema = z.object({
+  startedAt: z.number(),
+  durationInMs: z.number(),
+  passed: z.array(z.string()),
+  skipped: z.array(z.string()),
+  failed: z.array(z.string()),
+  warned: z.array(z.string()),
+  interrupted: z.array(z.string()),
+  timedOut: z.array(z.string()),
+  status: z.union([
+    z.literal("passed"),
+    z.literal("failed"),
+    z.literal("timedout"),
+    z.literal("interrupted"),
+    z.literal("unknown"),
+    z.literal("warned"),
+    z.literal("skipped"),
+  ]),
+});
+
+type Summary = z.infer<typeof summarySchema>;
 
 type SummaryReporterOptions = {
   name?: string;
@@ -23,6 +36,7 @@ type SummaryReporterOptions = {
 };
 
 class SummaryReporter implements Reporter, Summary {
+  startedAt = 0;
   durationInMs = -1;
   passed: string[] = [];
   skipped: string[] = [];
@@ -31,7 +45,6 @@ class SummaryReporter implements Reporter, Summary {
   interrupted: string[] = [];
   timedOut: string[] = [];
   status: Summary["status"] = "unknown";
-  startedAt = 0;
   private name: string;
   private outputFolder: string;
 
@@ -68,11 +81,11 @@ class SummaryReporter implements Reporter, Summary {
         ? "warned"
         : result.status;
     if (status === "passed") this.passed.push(z);
-    else if (status === "skipped") this.skipped.push(z);
     else if (status === "failed") this.failed.push(z);
     else if (status === "timedOut") this.timedOut.push(z);
     else if (status === "interrupted") this.interrupted.push(z);
     else if (status === "warned") this.warned.push(z);
+    else if (status === "skipped") this.skipped.push(z);
     else throw new Error(`Unexpected status: ${status}`);
   }
 
@@ -91,10 +104,25 @@ class SummaryReporter implements Reporter, Summary {
         return this.failed.indexOf(element) === index;
     });
 
+    const summary: Summary = {
+      startedAt: this.startedAt,
+      durationInMs: this.durationInMs,
+      passed: this.passed,
+      skipped: this.skipped,
+      failed: this.failed,
+      warned: this.warned,
+      interrupted: this.interrupted,
+      timedOut: this.timedOut,
+      status: this.status,
+    };
     fs.writeFileSync(
       path.join(this.outputFolder, this.name),
-      JSON.stringify(this, null, "  "),
+      JSON.stringify(summary, null, 2),
     );
+  }
+
+  public static isSummary(obj: unknown): obj is Summary {
+    return summarySchema.safeParse(obj).success;
   }
 }
 

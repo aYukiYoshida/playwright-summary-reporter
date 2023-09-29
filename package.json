@@ -59,5 +59,8 @@
   "bugs": {
     "url": "https://github.com/aYukiYoshida/playwright-summary-reporter/issues"
   },
-  "homepage": "https://github.com/aYukiYoshida/playwright-summary-reporter#readme"
+  "homepage": "https://github.com/aYukiYoshida/playwright-summary-reporter#readme",
+  "dependencies": {
+    "zod": "^3.22.2"
+  }
 }

@@ -11,7 +11,7 @@ const confirmToProceed = (message, callback) => {
     readline.question(`${message} (y/n): `, (answer) => {
         if (answer.toLowerCase() !== 'y') {
             readline.close();
-            console.log('Cancelled release');
+            console.log('Cancelled package');
             return;
         }
 
