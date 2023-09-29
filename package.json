@@ -36,7 +36,7 @@
     "format": "prettier ./src/**/*.ts --write",
     "clean": "rimraf dist && rimraf report && rimraf result",
     "package": "node scripts/package.js",
-    "prepublishOnly": "failsafe build package"
+    "prepublishOnly": "npm run build && npm run package"
   },
   "lint-staged": {
     "*.ts": [
