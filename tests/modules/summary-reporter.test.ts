@@ -7,8 +7,8 @@ test("レポートが正しく出力されること", () => {
   const summary = JSON.parse(fs.readFileSync(report, "utf-8"));
   expect(sr.isSummary(summary)).toBeTruthy();
   expect(summary.passed).toStrictEqual([
-    "playwright.setup.ts:3:5",
     "playwright.setup.js:3:5",
+    "playwright.setup.ts:3:5",
     "playwright.spec.js:3:5",
     "playwright.spec.ts:3:5",
     "playwright.test.js:3:5",
@@ -23,8 +23,8 @@ test("レポートが正しく出力されること", () => {
     "playwright.test.ts:10:6",
   ]);
   expect(summary.failed).toStrictEqual([
-    "playwright.setup.ts:17:5",
     "playwright.setup.js:17:5",
+    "playwright.setup.ts:17:5",
     "playwright.spec.js:17:5",
     "playwright.spec.ts:17:5",
     "playwright.test.js:17:5",
