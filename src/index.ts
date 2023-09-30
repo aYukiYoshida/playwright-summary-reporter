@@ -33,6 +33,7 @@ type Summary = z.infer<typeof summarySchema>;
 type SummaryReporterOptions = {
   name?: string;
   outputFolder?: string;
+  testMatch?: RegExp;
 };
 
 class SummaryReporter implements Reporter, Summary {
@@ -47,10 +48,14 @@ class SummaryReporter implements Reporter, Summary {
   status: Summary["status"] = "unknown";
   private name: string;
   private outputFolder: string;
+  private testMatch: RegExp;
 
   constructor(options: SummaryReporterOptions = {}) {
     this.name = options.name ? options.name : "summary.json";
     this.outputFolder = options.outputFolder ? options.outputFolder : "report";
+    this.testMatch = options.testMatch
+      ? options.testMatch
+      : /.*\.(spec|test|setup)\.(j|t|mj)s/;
   }
 
   onBegin() {
@@ -65,7 +70,7 @@ class SummaryReporter implements Reporter, Summary {
       if (s === "" && clean) continue;
       clean = false;
       title.push(s);
-      if (s.includes("spec.ts")) {
+      if (this.testMatch.test(s)) {
         fileName.push(s);
       }
     }

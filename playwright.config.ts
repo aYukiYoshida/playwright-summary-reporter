@@ -11,6 +11,7 @@ import { defineConfig, devices } from "@playwright/test";
  */
 export default defineConfig({
   testDir: "./tests/e2e",
+  testMatch: /.*\.(spec|test|setup)\.[tj]s/,
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */
   outputDir: "./result",
   /* Run tests in files in parallel */
@@ -26,7 +27,14 @@ export default defineConfig({
   reporter: [
     // native reporters
     ["html", { open: "never", outputFolder: "report" }],
-    ["./src/index.ts", { outputFolder: "report", name: "summary.json" }],
+    [
+      "./src/index.ts",
+      {
+        outputFolder: "report",
+        name: "summary.json",
+        testMatch: /.*\.(spec|test|setup)\.[tj]s/,
+      },
+    ],
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
