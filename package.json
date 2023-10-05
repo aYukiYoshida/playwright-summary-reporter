@@ -36,6 +36,7 @@
     "format": "prettier ./src/**/*.ts --write",
     "clean": "rimraf dist && rimraf report && rimraf result",
     "package": "node scripts/package.js",
+    "postversion": "git push && git push --tags",
     "prerelease": "npm run build && npm run package",
     "release": "npm publish --access=public ./dist"
   },
