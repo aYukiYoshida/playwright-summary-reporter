@@ -120,6 +120,7 @@ class SummaryReporter implements Reporter, Summary {
       timedOut: this.timedOut,
       status: this.status,
     };
+    if (!fs.existsSync(this.outputFolder)) fs.mkdirSync(this.outputFolder);
     fs.writeFileSync(
       path.join(this.outputFolder, this.name),
       JSON.stringify(summary, null, 2),
