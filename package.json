@@ -1,6 +1,6 @@
 {
   "name": "playwright-summary-reporter",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Reporter for the Playwright testing framework",
   "main": "src/index.js",
   "types": "src/index.d.ts",
