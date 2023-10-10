@@ -3,6 +3,9 @@
   "version": "1.0.6",
   "description": "Reporter for the Playwright testing framework",
   "main": "src/index.js",
+  "bin": {
+    "playwright-aid": "src/bin/cli.js"
+  },
   "types": "src/index.d.ts",
   "devDependencies": {
     "@playwright/test": "^1.38.1",
@@ -62,6 +65,9 @@
   },
   "homepage": "https://github.com/aYukiYoshida/playwright-summary-reporter#readme",
   "dependencies": {
+    "commander": "^11.0.0",
+    "dotenv": "^16.3.1",
+    "moment": "^2.29.4",
     "zod": "^3.22.2"
   }
 }
