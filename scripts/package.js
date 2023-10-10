@@ -30,8 +30,6 @@ confirmToProceed ('Is the set version correct for this release?', () => {
     fs.writeFileSync ('dist/package.json', JSON.stringify (releasePackage));
     fs.copyFileSync ('README.md', 'dist/README.md');
     fs.copyFileSync ('LICENSE', 'dist/LICENSE');
-    fs.mkdirSync ("dist/src/bin", { recursive: true });
-    fs.copyFileSync ('src/bin/cli.js', 'dist/src/bin/cli.js');
 
     console.log ('Packaged');
   } catch (err) {
